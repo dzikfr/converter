@@ -17,7 +17,7 @@ export default function Home() {
             This website to convert your file. Check the{' '}
             <a
               className="font-heading underline"
-              href="https://github.com/dzikfr"
+              href="https://github.com/dzikfr/converter"
             >
               github repo
             </a>{' '}

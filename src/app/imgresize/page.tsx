@@ -1,71 +1,78 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import axios from "axios";
+import { useState } from 'react'
+import axios from 'axios'
+import Button from '../components/Button'
 
 export default function Home() {
-  const [image, setImage] = useState<File | null>(null);
-  const [message, setMessage] = useState<string | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
-  const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
+  const [image, setImage] = useState<File | null>(null)
+  const [message, setMessage] = useState<string | null>(null)
+  const [preview, setPreview] = useState<string | null>(null)
+  const [downloadUrl, setDownloadUrl] = useState<string | null>(null)
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+    const file = e.target.files?.[0]
     if (file) {
-      setImage(file);
-      setPreview(URL.createObjectURL(file));
+      setImage(file)
+      setPreview(URL.createObjectURL(file))
     }
-  };
+  }
 
   const handleUpload = async () => {
     if (!image) {
-      alert("Please select an image");
-      return;
+      alert('Please select an image')
+      return
     }
 
-    const formData = new FormData();
-    formData.append("image", image);
+    const formData = new FormData()
+    formData.append('image', image)
 
     try {
-      const response = await axios.post("/api/upload", formData, {
+      const response = await axios.post('/api/upload', formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          'Content-Type': 'multipart/form-data',
         },
-      });
+      })
 
-      const data = response.data;
-      setMessage(data.message);
+      const data = response.data
+      setMessage(data.message)
       if (data.url) {
-        setPreview(data.url);
-        setDownloadUrl(data.url);
+        setPreview(data.url)
+        setDownloadUrl(data.url)
       }
     } catch (error) {
-      console.error("Error uploading image:", error);
-      setMessage("Error uploading image");
+      console.error('Error uploading image:', error)
+      setMessage('Error uploading image')
     }
-  };
+  }
 
   return (
     <div className="flex flex-col items-center p-6">
-      <h1 className="text-3xl font-bold mb-6">
-        Upload, Resize, and Download Image
+      <h1 className="mb-6 border-4 border-black bg-yellow-300 px-4 py-2 text-4xl font-extrabold text-black">
+        Upload, Resize, and Download
       </h1>
 
       {/* File Input */}
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handleImageChange}
-        className="file-input file-input-bordered file-input-primary mb-4"
-      />
+      <div className="flex justify-center">
+        <label
+          htmlFor="file-upload"
+          className="mb-4 cursor-pointer rounded-lg border-4 border-black bg-white px-6 py-3 font-bold text-black shadow-[3px_-3px_0px_#000000]"
+        >
+          Upload File
+        </label>
+        <input
+          id="file-upload"
+          type="file"
+          onChange={handleImageChange}
+          className="hidden"
+        />
+      </div>
 
       {/* Image Preview */}
-      {preview && <img src={preview} alt="Preview" className="max-w-xs mb-4" />}
+      {preview && <img src={preview} alt="Preview" className="mb-4 max-w-xs" />}
 
       {/* Upload Button */}
-      <button onClick={handleUpload} className="btn btn-primary mb-4">
-        Upload
-      </button>
+      <Button onClick={handleUpload}>Resize</Button>
 
       {/* Message */}
       {message && <p className="text-lg">{message}</p>}
@@ -83,5 +90,5 @@ export default function Home() {
         </div>
       )}
     </div>
-  );
+  )
 }

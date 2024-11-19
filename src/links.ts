@@ -2,6 +2,7 @@ import pdf from '../public/icons/pdf.svg'
 import imgresize from '../public/icons/imgresize.svg'
 import speech from '../public/icons/speech.svg'
 import removebg from '../public/icons/removebg.svg'
+import json from '../public/icons/json.svg'
 
 type SocialMedia = (typeof websites)[number]
 
@@ -37,6 +38,11 @@ const LINKS: { [key in SocialMedia]: Link } = {
     title: 'Word to PDF',
     icon: pdf,
     link: '/wordtopdf',
+  },
+  exceltojson: {
+    title: 'Excel to JSON',
+    icon: json,
+    link: '/exceltojson',
   },
 }
 
